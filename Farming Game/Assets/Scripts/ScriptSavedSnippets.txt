@@ -1,0 +1,54 @@
+#SellShop
+
+public void onSellShopSlotButtonClicked(int slot)
+	{
+		if(sellShopSlots[slot].slotMode == "none")
+		{
+			for(int i = 0; i < inventory.Length; i++)
+			{
+				string itemName = sellShop.transform.Find("Slot" + (slot + 1)).transform.Find("Slot" + (slot + 1) + "ItemNameInput").GetComponent<TMP_InputField>().text;
+				int selectedAmount = Mathf.RoundToInt(sellShop.transform.Find("Slot" + (slot + 1)).transform.Find("Slot" + (slot + 1) + "AmountSlider").GetComponent<Slider>().value);
+
+				if(itemName == inventory[i].itemName && selectedAmount <= inventory[i].amount)
+				{
+					if(itemName != "Hoe" && itemName != "hoe")
+					{
+						sellShopSlots[slot].itemName = sellShop.transform.Find("Slot" + (slot + 1)).transform.Find("Slot" + (slot + 1) + "ItemNameInput").GetComponent<TMP_InputField>().text;
+
+						sellShopSlots[slot].amount = Mathf.RoundToInt(sellShop.transform.Find("Slot" + (slot + 1)).transform.Find("Slot" + (slot + 1) + "AmountSlider").GetComponent<Slider>().value);
+						sellShopSlots[slot].price = Mathf.RoundToInt(sellShop.transform.Find("Slot" + (slot + 1)).transform.Find("Slot" + (slot + 1) + "PriceSlider").GetComponent<Slider>().value);
+
+
+
+						sellShop.transform.Find("Slot" + (slot + 1)).transform.Find("Slot" + (slot + 1) + "ItemNameInput").GetComponent<TMP_InputField>().interactable = false;
+
+						sellShop.transform.Find("Slot" + (slot + 1)).transform.Find("Slot" + (slot + 1) + "AmountSlider").GetComponent<Slider>().interactable = false;
+						sellShop.transform.Find("Slot" + (slot + 1)).transform.Find("Slot" + (slot + 1) + "PriceSlider").GetComponent<Slider>().interactable = false;
+
+
+
+						sellShopSlots[slot].slotMode = "selling";
+						sellShop.transform.Find("Slot" + (slot + 1)).transform.Find("Slot" + (slot + 1) + "TitleText").GetComponent<TMP_Text>().text = "Selling";
+
+						inventory[i].amount -= selectedAmount;
+
+					}
+				}
+			}
+		}
+	}
+
+#ShopSlot struct
+struct ShopSlot
+{
+	public string slotMode;
+	//none
+	//selling
+	//sold
+
+	public string itemName;
+
+	public int amount;
+	public int price;
+}
+l
